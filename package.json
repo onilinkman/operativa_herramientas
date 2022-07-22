@@ -2,7 +2,7 @@
   "name": "ope",
   "version": "1.0.0",
   "description": "\"Esta aplicacion recopila los metodos para resolver problemas de operativa 1\"",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron ."
@@ -11,5 +11,8 @@
   "license": "MIT",
   "devDependencies": {
     "electron": "^19.0.9"
+  },
+  "dependencies": {
+    "custom-electron-titlebar": "^4.1.0"
   }
 }

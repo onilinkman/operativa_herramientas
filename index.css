@@ -1,4 +1,58 @@
 *{
+    background: #1e1e1e;
     margin: 0%;
     padding: 0%;
+}
+
+.body-content{
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+}
+
+.body-content h1{
+    color:#8e8e8e;
+    font-size: xxx-large;
+}
+
+.input-condition{
+    margin-top: 32px;
+}
+
+.input-condition label{
+    font-size: xx-large;
+    font-family: cursive;
+    color: white;
+}
+
+.input-condition input{
+    padding: 7px;
+    font-family: cursive;
+    border-radius: 12px;
+    border-color: blanchedalmond;
+    background: linear-gradient(#c6cfff, white);
+}
+
+.btn-intro-data{
+    background: linear-gradient( #848484, #535353);
+    padding: 10px;
+    border-radius: 15px;
+    margin-top: 27px;
+    border: none;
+    font-size: larger;
+    font-family: cursive;
+    color: white;
+    cursor: pointer;
+}
+
+.input-variables{
+    background: linear-gradient(#c6cfff, white);
+    padding: 7px;
+}
+
+.variables-conteiner{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
 }

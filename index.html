@@ -8,7 +8,28 @@
     <link rel="stylesheet" href="./index.css">
 </head>
 <body>
-    <h1>hola</h1>
+    <div class="body-content">
+        <h1>Metodo Simplex</h1>
+        <div class="input-condition">
+            <label for="nro_var">Variables:</label>
+            <input type="number" class="nro_var" 
+                id="nro_var" placeholder="Ingrese cantidad de variables"/>
+
+            <label for="nro_restrictions">Restricciones:</label>
+            <input type="number" class="nro_restrictions"
+                id="nro_restrictions" placeholder="Ingrese cantidad de restricciones"/>
+            
+                
+            </div>
+            <button class="btn-intro-data" id="btn-intro-data" onclick="startInputMatrix()">Comenzar</button>
+
+        <div class="content-matrix" id="content-matrix">
+
+        </div>
+    </div>
+
+    <script src="./js/methosSimplex/Simplex.js"></script>
     <script src="./index.js"></script>
+
 </body>
 </html>
