@@ -56,3 +56,36 @@
     align-items: center;
     flex-wrap: wrap;
 }
+
+.row-restrictions{
+    display: grid;
+    justify-items: center;
+    align-items: center;
+}
+
+.column-restrictions{
+    display: flex;
+    align-items: center;
+}
+
+.column-restrictions p{
+    color:white;
+}
+
+.conteiner-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.startProcedure{
+    background: linear-gradient(#6d6da8,#313160);
+    color: white;
+    padding: 15px;
+    margin: 12px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-style: normal;
+    font-family: cursive;
+    font-size: 17px;
+}

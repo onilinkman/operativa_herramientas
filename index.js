@@ -3,11 +3,14 @@ var simplex=new Simplex()
 
 function startInputMatrix(){
     addTextTitle("content-matrix","Ingrese los datos")
-    let variables=document.getElementById("nro_var")
-    if(variables.value){
-        simplex.addInputVariables("content-matrix",variables.value)
+    let variables=document.getElementById("nro_var").value;
+    let constraint=document.getElementById("nro_constraint").value;
+    if(variables && constraint){
+        simplex.addInputVariables("content-matrix",variables)
+        simplex.addInputRestrictionMatrix("content-matrix",variables,constraint)
+        simplex.addButtonGetData("content-matrix")
     }else{
-        alert("Ingrese valor de variable")
+        alert("Ingrese valor de variables y restricciones")
     }
 }
 
