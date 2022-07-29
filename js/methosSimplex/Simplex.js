@@ -6,6 +6,13 @@ class Simplex{
     arrayVariables=[]
     matrixRestriction=[]
 
+    standarMatrix=[]
+
+    /**
+     * Se guardan los pasos de las iterraciones
+     */
+    stepsArray=[]
+
     constructor(){
         //this.variables=variables;
         //this.restrictions=restrictions
@@ -94,7 +101,9 @@ class Simplex{
         newButton.className="startProcedure"
         newButton.appendChild(document.createTextNode("Iniciar procedimiento"))
         newButton.onclick=()=>{
-            this.getDataMatrix()
+            if(!this.getDataMatrix()){
+                alert("llene todos los datos")
+            }
         }
         newDiv.appendChild(newButton)
         conteiner.appendChild(newDiv)
@@ -102,8 +111,31 @@ class Simplex{
 
     getDataMatrix(){
         let row=""
-        for(let i=0;i<this.matrixRestriction.length;i++){
-            console.log(this.matrixRestriction)
+        this.standarMatrix=[]
+        let c=[1]
+        let nro_variables=this.arrayVariables.length
+        let nro_procedure=this.matrixRestriction.length
+        for(let i=0;i<nro_variables+nro_procedure;i++){
+            if(i<nro_variables && !this.arrayVariables[i].value){
+                return false
+            }
+            c.push(i<nro_variables?(-1)*parseFloat(this.arrayVariables[i].value):0)
         }
+        c.push(0)
+        this.standarMatrix.push(c)
+        for(let i=0;i<nro_procedure;i++){
+            let row=[0]
+            let r=this.matrixRestriction[i]
+            for(let j=0;j<nro_procedure+r.length-1;j++){
+                if(j<nro_variables && !r[j].value){
+                    return false
+                }
+                row.push(j<nro_variables?parseFloat(r[j].value):j-(r.length-1)==i?1:0)
+            }
+            row.push(parseFloat(r[r.length-1].value))
+            this.standarMatrix.push(row)
+        }
+        console.log(this.standarMatrix)
+        return true
     }
 }
