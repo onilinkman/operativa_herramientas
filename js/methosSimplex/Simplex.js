@@ -153,7 +153,11 @@ class Simplex {
 			"isArrayPositive",
 			this.isArrayPositive(this.standarMatrix[0])
 		);
-		console.log("existsMatrixIdentity",this.existsMatrixIdentity(this.standarMatrix));
+		console.log(
+			"existsMatrixIdentity",
+			this.existsMatrixIdentity(this.standarMatrix)
+		);
+		console.log("searchPivot", this.searchPivot());
 	}
 
 	isArrayPositive(arr) {
@@ -171,26 +175,67 @@ class Simplex {
 		for (let j = 1; j < matrix[0].length - 1; j++) {
 			let content = matrix[0];
 			if (content[j] == 0) {
-                let sum=0;
+				let sum = 0;
 				for (let k = 1; k < matrix.length; k++) {
-                    if(matrix[k][j]==1 && sum==0){
-                        arrAux.push(k)
-                    }
-                    sum+=matrix[k][j]
+					if (matrix[k][j] == 1 && sum == 0) {
+						arrAux.push(k);
+					}
+					sum += matrix[k][j];
 				}
-                if(sum>1){
-                    arrAux.pop()
-                }
+				if (sum > 1) {
+					arrAux.pop();
+				}
 			}
 		}
-        for(let i=0;i<arrAux.length;i++){
-            if(!arrAux[arrAux[i]-1]){ return false}
-            if(arrAux[arrAux[i]-1]>0){
-                arrAux[arrAux[i]-1]*=-1
-            }else{
-                return false
-            }
-        }
-        return true
+
+		for (let i = 0; i < arrAux.length; i++) {
+			if (!arrAux[arrAux[i] - 1]) {
+				return false;
+			}
+			if (arrAux[arrAux[i] - 1] > 0) {
+				arrAux[arrAux[i] - 1] *= -1;
+			} else {
+				return false;
+			}
+		}
+		console.log(matrix.length - 1, arrAux.length);
+		return matrix.length - 1 === arrAux.length;
+	}
+
+	searchPivot() {
+		let pointer = this.moreNegative(this.standarMatrix[0]);
+		let pivot = this.returnPivot(this.standarMatrix, pointer);
+		return this.standarMatrix[pivot][pointer];
+	}
+
+	moreNegative(arr) {
+		let n = 0;
+		let pointer = 0;
+		for (let i = 1; i < arr.length - 1; i++) {
+			if (arr[i] < n) {
+				n = arr[i];
+				pointer = i;
+			}
+		}
+		console.log("pointer", pointer);
+		return pointer;
+	}
+
+	returnPivot(m, pointer) {
+		let n = m[1][pointer];
+		let pivot = 1;
+		for (let i = 1; i < m.length; i++) {
+			if (m[i][pointer] <= 0) {
+				continue;
+			}
+			let aux = m[i][m[i].length - 1] / m[i][pointer];
+			console.log("aux", aux);
+			if (aux < n) {
+				pivot = i;
+				n = aux;
+			}
+		}
+		console.log("pivot", pivot);
+		return pivot;
 	}
 }
