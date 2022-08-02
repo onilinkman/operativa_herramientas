@@ -149,15 +149,20 @@ class Simplex {
 	}
 
 	isConditionComplete() {
-		console.log(
-			"isArrayPositive",
-			this.isArrayPositive(this.standarMatrix[0])
-		);
-		console.log(
-			"existsMatrixIdentity",
-			this.existsMatrixIdentity(this.standarMatrix)
-		);
-		console.log("searchPivot", this.searchPivot());
+		console.log(this.solveStepToStep(this.standarMatrix.slice()));
+	}
+
+	solveStepToStep(m) {
+		if (this.isArrayPositive(m[0])) return "todo es positivo";
+		if (!this.existsMatrixIdentity(m)) return "error";
+		var { pointer, pivotFlag, pivot } = this.searchPivot(m);
+		//var m = this.standarMatrix.slice();
+		console.log("searchPivot", pointer, pivotFlag, pivot);
+
+		this.splitPivot(m, pivotFlag, pivot);
+		this.solveMatrix(m, pivotFlag, pointer);
+		this.stepsArray.push(m);
+		console.log(this.solveStepToStep(m.slice()));
 	}
 
 	isArrayPositive(arr) {
@@ -202,10 +207,12 @@ class Simplex {
 		return matrix.length - 1 === arrAux.length;
 	}
 
-	searchPivot() {
-		let pointer = this.moreNegative(this.standarMatrix[0]);
-		let pivot = this.returnPivot(this.standarMatrix, pointer);
-		return this.standarMatrix[pivot][pointer];
+	searchPivot(m) {
+		let pointer = this.moreNegative(m[0]);
+		let pivotFlag = this.returnPivotFlag(m, pointer);
+
+		let pivot = m[pivotFlag][pointer];
+		return { pointer: pointer, pivotFlag: pivotFlag, pivot: pivot };
 	}
 
 	moreNegative(arr) {
@@ -221,9 +228,9 @@ class Simplex {
 		return pointer;
 	}
 
-	returnPivot(m, pointer) {
-		let n = m[1][pointer];
-		let pivot = 1;
+	returnPivotFlag(m, pointer) {
+		let n = m[1][m[1].length - 1] / m[1][pointer];
+		let pivotFlag = 1;
 		for (let i = 1; i < m.length; i++) {
 			if (m[i][pointer] <= 0) {
 				continue;
@@ -231,11 +238,32 @@ class Simplex {
 			let aux = m[i][m[i].length - 1] / m[i][pointer];
 			console.log("aux", aux);
 			if (aux < n) {
-				pivot = i;
+				pivotFlag = i;
 				n = aux;
 			}
 		}
-		console.log("pivot", pivot);
-		return pivot;
+		console.log("pivotFlag", pivotFlag);
+		return pivotFlag;
+	}
+
+	splitPivot(m, pivotFlag, pivot) {
+		console.log(m, m[pivotFlag]);
+		let arr = m[pivotFlag];
+		console.log(arr);
+		for (let i = 0; i < arr.length; i++) {
+			arr[i] = arr[i] / pivot;
+		}
+		console.log("split", arr);
+	}
+
+	solveMatrix(m, pivotFlag, pointer) {
+		for (let i = 0; i < m.length; i++) {
+			if (i === pivotFlag) continue;
+			let aux = -1 * m[i][pointer];
+			for (let j = 0; j < m[i].length; j++) {
+				m[i][j] += aux * m[pivotFlag][j];
+			}
+		}
+		console.log("solveMatrix", m);
 	}
 }
