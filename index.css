@@ -1,91 +1,115 @@
-*{
-    background: #1e1e1e;
-    margin: 0%;
-    padding: 0%;
+* {
+	background: #1e1e1e;
+	margin: 0%;
+	padding: 0%;
 }
 
-.body-content{
-    display: grid;
-    justify-content: center;
-    align-items: center;
-    justify-items: center;
+input {
+	background: linear-gradient(#303b60, black) !important;
+	color: white !important;
 }
 
-.body-content h1{
-    color:#8e8e8e;
-    font-size: xxx-large;
+.body-content {
+	display: grid;
+	justify-content: center;
+	align-items: center;
+	justify-items: center;
 }
 
-.input-condition{
-    margin-top: 32px;
+.body-content h1 {
+	color: #8e8e8e;
+	font-size: xxx-large;
 }
 
-.input-condition label{
-    font-size: xx-large;
-    font-family: cursive;
+.input-condition {
+	margin-top: 32px;
+}
+
+.input-condition label {
+	font-size: xx-large;
+	font-family: cursive;
+	color: white;
+}
+
+.input-condition input {
+	padding: 7px;
+	font-family: cursive;
+	border-radius: 12px;
+	border-color: blanchedalmond;
+	background: linear-gradient(#c6cfff, white);
+}
+
+.btn-intro-data {
+	background: linear-gradient(#848484, #535353);
+	padding: 10px;
+	border-radius: 15px;
+	margin-top: 27px;
+	border: none;
+	font-size: larger;
+	font-family: cursive;
+	color: white;
+	cursor: pointer;
+}
+
+.input-variables {
+	background: linear-gradient(#c6cfff, white);
+	padding: 7px;
+}
+
+.variables-conteiner {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.row-restrictions {
+	display: grid;
+	justify-items: center;
+	align-items: center;
+}
+
+.column-restrictions {
+	display: flex;
+	align-items: center;
+}
+
+.column-restrictions p {
+	color: white;
+}
+
+.conteiner-btn {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.startProcedure {
+	background: linear-gradient(#6d6da8, #313160);
+	color: white;
+	padding: 15px;
+	margin: 12px;
+	border-radius: 15px;
+	cursor: pointer;
+	font-style: normal;
+	font-family: cursive;
+	font-size: 17px;
+}
+
+table {
     color: white;
+    margin: auto;
+    margin-top: 20px;
+    table-layout: fixed;
+    width: 315px;
 }
 
-.input-condition input{
-    padding: 7px;
-    font-family: cursive;
-    border-radius: 12px;
-    border-color: blanchedalmond;
-    background: linear-gradient(#c6cfff, white);
+table tr th {
+	border: 1px solid gray;
+	padding: 3px;
 }
 
-.btn-intro-data{
-    background: linear-gradient( #848484, #535353);
-    padding: 10px;
-    border-radius: 15px;
-    margin-top: 27px;
-    border: none;
-    font-size: larger;
-    font-family: cursive;
-    color: white;
-    cursor: pointer;
-}
-
-.input-variables{
-    background: linear-gradient(#c6cfff, white);
-    padding: 7px;
-}
-
-.variables-conteiner{
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-.row-restrictions{
-    display: grid;
-    justify-items: center;
-    align-items: center;
-}
-
-.column-restrictions{
-    display: flex;
-    align-items: center;
-}
-
-.column-restrictions p{
-    color:white;
-}
-
-.conteiner-btn{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.startProcedure{
-    background: linear-gradient(#6d6da8,#313160);
-    color: white;
-    padding: 15px;
-    margin: 12px;
-    border-radius: 15px;
-    cursor: pointer;
-    font-style: normal;
-    font-family: cursive;
-    font-size: 17px;
+table tr td {
+    border: 1px solid gray;
+    padding: 3px;
+    overflow: hidden;
 }

@@ -10,6 +10,8 @@ class Simplex {
 	 * Se guardan los pasos de las iterraciones
 	 */
 	stepsArray = [];
+	vBasics = [];
+	nameConteiner;
 
 	constructor() {
 		//this.variables=variables;
@@ -22,15 +24,15 @@ class Simplex {
 	 * @param {Number} variables
 	 */
 	addInputVariables(nameConteiner, variables) {
-		this.deleteInputVariables("variables-conteiner");
+		this.deleteInputVariables('variables-conteiner');
 		this.arrayVariables = [];
 		let conteiner = document.getElementById(nameConteiner);
-		let newDiv = document.createElement("div");
-		newDiv.id = "variables-conteiner";
-		newDiv.className = "variables-conteiner";
+		let newDiv = document.createElement('div');
+		newDiv.id = 'variables-conteiner';
+		newDiv.className = 'variables-conteiner';
 		for (let i = 1; i <= variables; i++) {
-			var input = document.createElement("input");
-			input.className = "input-variables";
+			var input = document.createElement('input');
+			input.className = 'input-variables';
 			this.arrayVariables.push(input);
 			let textNode = this.generateTextX(i);
 			newDiv.appendChild(input);
@@ -40,13 +42,13 @@ class Simplex {
 	}
 
 	generateTextX(i) {
-		let textNode = document.createElement("p");
-		textNode.appendChild(document.createTextNode("X"));
-		let subtext = document.createElement("sub");
+		let textNode = document.createElement('p');
+		textNode.appendChild(document.createTextNode('X'));
+		let subtext = document.createElement('sub');
 		subtext.appendChild(document.createTextNode(i));
 		textNode.appendChild(subtext);
 		//textNode.appendChild(document.createTextNode("="))
-		textNode.style = "color:white";
+		textNode.style = 'color:white';
 		return textNode;
 	}
 
@@ -58,27 +60,28 @@ class Simplex {
 	}
 
 	addInputRestrictionMatrix(nameCointeiner, variables, restrictions) {
-		this.deleteInputVariables("resctriction-conteiner");
+		this.deleteInputVariables('resctriction-conteiner');
 		this.matrixRestriction = [];
 		let conteiner = document.getElementById(nameCointeiner);
-		let newDiv = document.createElement("div");
+		let newDiv = document.createElement('div');
 		variables = parseInt(variables);
-		newDiv.id = "resctriction-conteiner";
-		newDiv.className = "resctriction-conteiner";
-		let rowDiv = document.createElement("div");
-		rowDiv.className = "row-restrictions";
+		newDiv.id = 'resctriction-conteiner';
+		newDiv.className = 'resctriction-conteiner';
+		let rowDiv = document.createElement('div');
+		rowDiv.className = 'row-restrictions';
+		this.nameConteiner = nameCointeiner;
 
 		for (let i = 0; i < restrictions; i++) {
-			let columnDiv = document.createElement("div");
-			columnDiv.className = "column-restrictions";
+			let columnDiv = document.createElement('div');
+			columnDiv.className = 'column-restrictions';
 			let row = [];
-			let lowEquals = document.createElement("p");
-			lowEquals.appendChild(document.createTextNode("≤"));
+			let lowEquals = document.createElement('p');
+			lowEquals.appendChild(document.createTextNode('≤'));
 			for (let j = 1; j <= variables + 1; j++) {
 				let textNode =
 					j <= variables ? this.generateTextX(j) : lowEquals;
-				let input = document.createElement("input");
-				input.className = "input-variables";
+				let input = document.createElement('input');
+				input.className = 'input-variables';
 				row.push(input);
 				columnDiv.appendChild(j <= variables ? input : textNode);
 				columnDiv.appendChild(j <= variables ? textNode : input);
@@ -91,25 +94,26 @@ class Simplex {
 	}
 
 	addButtonGetData(nameCointeiner) {
-		this.deleteInputVariables("start-procedure");
+		this.deleteInputVariables('start-procedure');
 		let conteiner = document.getElementById(nameCointeiner);
-		let newDiv = document.createElement("div");
-		newDiv.id = "start-procedure";
-		newDiv.className = "conteiner-btn";
-		let newButton = document.createElement("button");
-		newButton.className = "startProcedure";
-		newButton.appendChild(document.createTextNode("Iniciar procedimiento"));
+		let newDiv = document.createElement('div');
+		newDiv.id = 'start-procedure';
+		newDiv.className = 'conteiner-btn';
+		let newButton = document.createElement('button');
+		newButton.className = 'startProcedure';
+		newButton.appendChild(document.createTextNode('Iniciar procedimiento'));
 		newButton.onclick = () => {
 			if (!this.getDataMatrix()) {
-				alert("llene todos los datos");
+				alert('llene todos los datos');
 			}
+			this.startResolution()
 		};
 		newDiv.appendChild(newButton);
 		conteiner.appendChild(newDiv);
 	}
 
 	getDataMatrix() {
-		let row = "";
+		let row = '';
 		this.standarMatrix = [];
 		let c = [1];
 		let nro_variables = this.arrayVariables.length;
@@ -148,21 +152,41 @@ class Simplex {
 		return true;
 	}
 
-	isConditionComplete() {
-		console.log(this.solveStepToStep(this.standarMatrix.slice()));
+	startResolution() {
+		let variableBasic = ['Z'];
+		let nro_procedure = this.matrixRestriction.length;
+		for (let i = 1; i <= nro_procedure; i++) {
+			variableBasic.push('S' + i);
+		}
+		this.vBasics.push(variableBasic);
+
+		this.generateTableStep(this.standarMatrix,0)
+		console.log(this.solveStepToStep(this.cloneMatrix(this.standarMatrix),1));
 	}
 
-	solveStepToStep(m) {
-		if (this.isArrayPositive(m[0])) return "todo es positivo";
-		if (!this.existsMatrixIdentity(m)) return "error";
+	solveStepToStep(m,step_nro) {
+		if (this.isArrayPositive(m[0])) return 'todo es positivo';
+		if (!this.existsMatrixIdentity(m)) return 'error';
 		var { pointer, pivotFlag, pivot } = this.searchPivot(m);
 		//var m = this.standarMatrix.slice();
-		console.log("searchPivot", pointer, pivotFlag, pivot);
+		console.log('searchPivot', pointer, pivotFlag, pivot);
 
 		this.splitPivot(m, pivotFlag, pivot);
 		this.solveMatrix(m, pivotFlag, pointer);
 		this.stepsArray.push(m);
-		console.log(this.solveStepToStep(m.slice()));
+
+		let nro_variables = this.arrayVariables.length;
+		let nro_procedure = this.matrixRestriction.length;
+		let vB = this.vBasics[this.vBasics.length - 1].slice();
+		vB[pivotFlag] =
+			pointer <= nro_variables
+				? 'X' + pointer
+				: 'S' + (nro_variables + nro_procedure - pointer);
+		this.vBasics.push(vB);
+
+		this.generateTableStep(m,step_nro)
+
+		console.log(this.solveStepToStep(this.cloneMatrix(m),step_nro+1));
 	}
 
 	isArrayPositive(arr) {
@@ -224,7 +248,7 @@ class Simplex {
 				pointer = i;
 			}
 		}
-		console.log("pointer", pointer);
+		console.log('pointer', pointer);
 		return pointer;
 	}
 
@@ -236,13 +260,13 @@ class Simplex {
 				continue;
 			}
 			let aux = m[i][m[i].length - 1] / m[i][pointer];
-			console.log("aux", aux);
+			console.log('aux', aux);
 			if (aux < n) {
 				pivotFlag = i;
 				n = aux;
 			}
 		}
-		console.log("pivotFlag", pivotFlag);
+		console.log('pivotFlag', pivotFlag);
 		return pivotFlag;
 	}
 
@@ -253,7 +277,7 @@ class Simplex {
 		for (let i = 0; i < arr.length; i++) {
 			arr[i] = arr[i] / pivot;
 		}
-		console.log("split", arr);
+		console.log('split', arr);
 	}
 
 	solveMatrix(m, pivotFlag, pointer) {
@@ -264,6 +288,66 @@ class Simplex {
 				m[i][j] += aux * m[pivotFlag][j];
 			}
 		}
-		console.log("solveMatrix", m);
+		console.log('solveMatrix', m);
+	}
+
+	cloneMatrix(m) {
+		let newM = [];
+		for (let i = 0; i < m.length; i++) {
+			let cloneArr = m[i].slice();
+			newM.push(cloneArr);
+		}
+		return newM;
+	}
+
+	generateTableStep(m,step_nro) {
+		let conteiner = document.getElementById(this.nameConteiner);
+		let newTable = document.createElement('table');
+		let newThead = document.createElement('thead');
+		let nro_variables = this.arrayVariables.length;
+		let nro_procedure = this.matrixRestriction.length;
+		let trThead = document.createElement('tr');
+		let vTh = document.createElement('th');
+		vTh.appendChild(document.createTextNode('V'));
+		trThead.appendChild(vTh);
+		let zTh = document.createElement('th');
+		zTh.appendChild(document.createTextNode('Z'));
+		trThead.appendChild(zTh);
+
+		for (let i = 1; i <= nro_variables + nro_procedure; i++) {
+			let newTh = document.createElement('th');
+			let newSub = document.createElement('sub');
+			newSub.appendChild(
+				document.createTextNode(
+					i <= nro_variables ? i : i - nro_variables
+				)
+			);
+			let newP = document.createElement('p');
+			newP.appendChild(
+				document.createTextNode(i <= nro_variables ? 'X' : 'S')
+			);
+			newP.appendChild(newSub);
+			newTh.appendChild(newP);
+			trThead.appendChild(newTh);
+		}
+		newThead.appendChild(trThead);
+		newTable.appendChild(newThead);
+		//Creating Table Body
+
+		let newTbody = document.createElement('tbody');
+		for (let i = 0; i < m.length; i++) {
+			let newTr=document.createElement('tr')
+			let newTdV=document.createElement('td')
+			newTdV.appendChild(document.createTextNode(this.vBasics[step_nro][i]))
+			newTr.appendChild(newTdV)
+			for(let j=0;j<m[i].length;j++){
+				let newTd=document.createElement('td')
+				newTd.appendChild(document.createTextNode(m[i][j]))
+				newTr.appendChild(newTd)
+			}
+			newTbody.appendChild(newTr)
+		}
+		newTable.appendChild(newTbody);
+		conteiner.appendChild(newTable)
 	}
 }
