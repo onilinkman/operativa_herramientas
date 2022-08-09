@@ -4,32 +4,25 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
     <link rel="stylesheet" href="./index.css">
+    <link rel="stylesheet" href="./styles/styles.css">
+    <title>Operativa I</title>
 </head>
 <body>
-    <div class="body-content">
-        <h1>Metodo Simplex</h1>
-        <div class="input-condition">
-            <label for="nro_var">Variables:</label>
-            <input type="number" class="nro_var" 
-                id="nro_var" placeholder="Ingrese cantidad de variables"/>
 
-            <label for="nro_constraint">Restricciones:</label>
-            <input type="number" class="nro_constraint"
-                id="nro_constraint" placeholder="Ingrese cantidad de restricciones"/>
-            
-                
-            </div>
-            <button class="btn-intro-data" id="btn-intro-data" onclick="startInputMatrix()">Comenzar</button>
-
-        <div class="content-matrix" id="content-matrix">
-
+    <div class="content-body">
+        <div class="body-header">
+            <h1>Herramientas para Investigacion Operativa</h1>
+        </div>
+        <div class="content-tools">
+            <button class="cardTool">
+                METODO SIMPLEX
+            </button>
+            <button class="cardTool" onclick="abrirVentana()">abrir ventana</button>
+            <button class="cardTool" onclick="closeVentana()">cerrar ventana</button>
         </div>
     </div>
-
-    <script src="./js/methosSimplex/Simplex.js"></script>
+    
     <script src="./index.js"></script>
-
 </body>
 </html>

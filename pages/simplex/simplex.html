@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./simplex.css">
+</head>
+<body>
+    <div class="body-content">
+        <h1>Metodo Simplex</h1>
+        <div class="input-condition">
+            
+            <div class="content-input">
+                <label for="nro_var">Variables:</label>
+                <input type="number" class="nro_var" 
+                id="nro_var" placeholder="Ingrese cantidad de variables"/>
+                
+            </div>
+            
+            <div class="content-input">
+                <label for="nro_constraint">Restricciones:</label>
+                <input type="number" class="nro_constraint"
+                    id="nro_constraint" placeholder="Ingrese cantidad de restricciones"/>
+
+            </div>
+            
+                
+            </div>
+            <button class="btn-intro-data" id="btn-intro-data" onclick="startInputMatrix()">Comenzar</button>
+
+        <div class="content-matrix" id="content-matrix">
+
+        </div>
+    </div>
+
+    <script src="../../js/methosSimplex/Simplex.js"></script>
+    <script src="./simplex.js"></script>
+
+</body>
+</html>

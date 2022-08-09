@@ -5,12 +5,14 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron ."
+    "start": "electron .",
+    "dist": "electron-builder"
   },
   "author": "Christian Marban Callisaya",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^19.0.9"
+    "electron": "^19.0.9",
+    "electron-builder": "^23.3.3"
   },
   "dependencies": {
     "custom-electron-titlebar": "^4.1.0"

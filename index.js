@@ -1,35 +1,39 @@
+const listTools = [
+	{
+		name: 'Metodo Simplex',
+		description: 'Modulo para resolver por el metodo Simplex',
+	},
+];
 
-var simplex=new Simplex()
+var wind;
 
-function startInputMatrix(){
-    addTextTitle("content-matrix","Ingrese los datos")
-    let variables=document.getElementById("nro_var").value;
-    let constraint=document.getElementById("nro_constraint").value;
-    if(variables && constraint){
-        simplex.addInputVariables("content-matrix",variables)
-        simplex.addInputRestrictionMatrix("content-matrix",variables,constraint)
-        simplex.addButtonGetData("content-matrix")
+const CreateCard = () => {
+	let newDiv = document.createElement('div');
+	let newA = document.createElement('a');
+};
+
+function abrirVentana() {
+    
+    if(!wind){
+        wind=window.open(
+            './pages/simplex/simplex.html',
+            '_blank',
+            `frame=false,nodeIntegration=no,`
+        );
     }else{
-        alert("Ingrese valor de variables y restricciones")
+        if(!wind.closed){
+            alert("ya tiene abierto esta ventana")
+        }else{
+            wind=window.open(
+                './pages/simplex/simplex.html',
+                '_blank',
+                `frame=false,nodeIntegration=no,`
+            );
+        }
     }
+
 }
 
-/**
- * 
- * @param {Text} nameContent es
- * @param {Text} text 
- */
-function addTextTitle(nameContent,text){
-    let title=document.createElement("h2");
-    title.id="title-text";
-    title.appendChild(document.createTextNode(text))
-    let content=document.getElementById(nameContent)
-    content.appendChild(title)
-}
-
-/**
- * add a set of variables
- */
-function addVariable(){
-    Simplex.addVariable()
+function closeVentana(){
+    wind.close();
 }
