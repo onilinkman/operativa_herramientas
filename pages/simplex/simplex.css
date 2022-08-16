@@ -1,25 +1,32 @@
-* {
-	background: #1e1e1e;
-	margin: 0%;
-	padding: 0%;
+*{
+	width: auto;
+	height: auto;
 }
 
 input {
 	background: linear-gradient(#303b60, black) !important;
 	color: white !important;
+	height: 15px;
+	width: 200px;
+}
+.body-header{
+	width:100%;
 }
 
-.body-content {
-	display: grid;
-	justify-content: center;
-	align-items: center;
-	justify-items: center;
+.content-body  {
+	
+    flex-direction: column;
+    align-items: center;
 }
 
-.body-content h1 {
-	color: #8e8e8e;
-	font-size: xxx-large;
-	-webkit-app-region:drag;
+.body-mid{
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+    height: calc( 100vh - 30px );
+    width: 100%;
+    overflow-y: auto;
 }
 
 .input-condition {
@@ -51,6 +58,8 @@ input {
 	font-family: cursive;
 	color: white;
 	cursor: pointer;
+	width: 217px;
+    height: 55px;
 }
 
 .input-variables {

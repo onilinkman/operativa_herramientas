@@ -106,7 +106,7 @@ class Simplex {
 			if (!this.getDataMatrix()) {
 				alert('llene todos los datos');
 			}
-			this.startResolution()
+			this.startResolution();
 		};
 		newDiv.appendChild(newButton);
 		conteiner.appendChild(newDiv);
@@ -148,7 +148,7 @@ class Simplex {
 			row.push(parseFloat(r[r.length - 1].value));
 			this.standarMatrix.push(row);
 		}
-		console.log(this.standarMatrix);
+		//console.log(this.standarMatrix);
 		return true;
 	}
 
@@ -160,16 +160,18 @@ class Simplex {
 		}
 		this.vBasics.push(variableBasic);
 
-		this.generateTableStep(this.standarMatrix,0)
-		console.log(this.solveStepToStep(this.cloneMatrix(this.standarMatrix),1));
+		this.generateTableStep(this.standarMatrix, 0);
+		console.log(
+			this.solveStepToStep(this.cloneMatrix(this.standarMatrix), 1)
+		);
 	}
 
-	solveStepToStep(m,step_nro) {
+	solveStepToStep(m, step_nro) {
 		if (this.isArrayPositive(m[0])) return 'todo es positivo';
 		if (!this.existsMatrixIdentity(m)) return 'error';
 		var { pointer, pivotFlag, pivot } = this.searchPivot(m);
 		//var m = this.standarMatrix.slice();
-		console.log('searchPivot', pointer, pivotFlag, pivot);
+		//console.log('searchPivot', pointer, pivotFlag, pivot);
 
 		this.splitPivot(m, pivotFlag, pivot);
 		this.solveMatrix(m, pivotFlag, pointer);
@@ -184,9 +186,9 @@ class Simplex {
 				: 'S' + (nro_variables + nro_procedure - pointer);
 		this.vBasics.push(vB);
 
-		this.generateTableStep(m,step_nro)
+		this.generateTableStep(m, step_nro);
 
-		console.log(this.solveStepToStep(this.cloneMatrix(m),step_nro+1));
+		console.log(this.solveStepToStep(this.cloneMatrix(m), step_nro + 1));
 	}
 
 	isArrayPositive(arr) {
@@ -201,14 +203,21 @@ class Simplex {
 	existsMatrixIdentity(matrix) {
 		let arrAux = [];
 
+		for (let i = 1; i < matrix.length; i++) {
+			arrAux.push(0);
+		}
+		console.log('est', arrAux);
+
 		for (let j = 1; j < matrix[0].length - 1; j++) {
 			let content = matrix[0];
 			if (content[j] == 0) {
 				let sum = 0;
+				console.log('////Viendo identidad de la columna', j);
 				for (let k = 1; k < matrix.length; k++) {
 					if (matrix[k][j] == 1 && sum == 0) {
-						arrAux.push(k);
+						arrAux[k - 1] = 1;
 					}
+					console.log(matrix[k][j]);
 					sum += matrix[k][j];
 				}
 				if (sum > 1) {
@@ -217,13 +226,10 @@ class Simplex {
 			}
 		}
 
+		console.log('viendo array', arrAux);
+
 		for (let i = 0; i < arrAux.length; i++) {
-			if (!arrAux[arrAux[i] - 1]) {
-				return false;
-			}
-			if (arrAux[arrAux[i] - 1] > 0) {
-				arrAux[arrAux[i] - 1] *= -1;
-			} else {
+			if (arrAux[i] === 0) {
 				return false;
 			}
 		}
@@ -248,7 +254,7 @@ class Simplex {
 				pointer = i;
 			}
 		}
-		console.log('pointer', pointer);
+		//console.log('pointer', pointer);
 		return pointer;
 	}
 
@@ -260,24 +266,24 @@ class Simplex {
 				continue;
 			}
 			let aux = m[i][m[i].length - 1] / m[i][pointer];
-			console.log('aux', aux);
+			//console.log('aux', aux);
 			if (aux < n) {
 				pivotFlag = i;
 				n = aux;
 			}
 		}
-		console.log('pivotFlag', pivotFlag);
+		//console.log('pivotFlag', pivotFlag);
 		return pivotFlag;
 	}
 
 	splitPivot(m, pivotFlag, pivot) {
-		console.log(m, m[pivotFlag]);
+		//console.log(m, m[pivotFlag]);
 		let arr = m[pivotFlag];
-		console.log(arr);
+		//console.log(arr);
 		for (let i = 0; i < arr.length; i++) {
 			arr[i] = arr[i] / pivot;
 		}
-		console.log('split', arr);
+		//console.log('split', arr);
 	}
 
 	solveMatrix(m, pivotFlag, pointer) {
@@ -288,7 +294,7 @@ class Simplex {
 				m[i][j] += aux * m[pivotFlag][j];
 			}
 		}
-		console.log('solveMatrix', m);
+		//console.log('solveMatrix', m);
 	}
 
 	cloneMatrix(m) {
@@ -300,7 +306,7 @@ class Simplex {
 		return newM;
 	}
 
-	generateTableStep(m,step_nro) {
+	generateTableStep(m, step_nro) {
 		let conteiner = document.getElementById(this.nameConteiner);
 		let newTable = document.createElement('table');
 		let newThead = document.createElement('thead');
@@ -336,18 +342,20 @@ class Simplex {
 
 		let newTbody = document.createElement('tbody');
 		for (let i = 0; i < m.length; i++) {
-			let newTr=document.createElement('tr')
-			let newTdV=document.createElement('td')
-			newTdV.appendChild(document.createTextNode(this.vBasics[step_nro][i]))
-			newTr.appendChild(newTdV)
-			for(let j=0;j<m[i].length;j++){
-				let newTd=document.createElement('td')
-				newTd.appendChild(document.createTextNode(m[i][j]))
-				newTr.appendChild(newTd)
+			let newTr = document.createElement('tr');
+			let newTdV = document.createElement('td');
+			newTdV.appendChild(
+				document.createTextNode(this.vBasics[step_nro][i])
+			);
+			newTr.appendChild(newTdV);
+			for (let j = 0; j < m[i].length; j++) {
+				let newTd = document.createElement('td');
+				newTd.appendChild(document.createTextNode(m[i][j]));
+				newTr.appendChild(newTd);
 			}
-			newTbody.appendChild(newTr)
+			newTbody.appendChild(newTr);
 		}
 		newTable.appendChild(newTbody);
-		conteiner.appendChild(newTable)
+		conteiner.appendChild(newTable);
 	}
 }

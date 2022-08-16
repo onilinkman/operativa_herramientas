@@ -33,3 +33,7 @@ function addTextTitle(nameContent,text){
 function addVariable(){
     Simplex.addVariable()
 }
+
+function closeThisWindow(){
+    window.close()
+}
